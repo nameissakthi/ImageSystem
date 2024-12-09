@@ -13,7 +13,7 @@ const ProductionTracking = () => {
             <h1 className='text-6xl w-full border-b-2 border-black mb-8'>Production Tracking</h1>
             <div>
                 {
-                    orders.map((item, index) => {
+                    orders.filter(item=>item.summary<100).map((item, index) => {
                         return (
                             <div key={index} className='flex justify-between py-2 pr-8 border-2 border-slate-700 mb-4 gap-4'>
                                 <div className='flex-shrink pl-4 text-3xl'>

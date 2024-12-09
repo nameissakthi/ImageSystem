@@ -27,6 +27,15 @@ const PageContextProvider = (props) => {
                 "MOUND 2 41MM X 17MM","MOUND 2 41MM X 17MM","MOUND 2 41MM X 17MM"
             ],
         },
+        {
+            bankName : "UCO Bank",
+            bankLogo : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYJEUTA-c9nIkxjBgMIHw6prRBZhF0wzWN-w&s",
+            production : "Development Process",
+            summary : 100,
+            products : [
+                "MOUND 2 41MM X 17MM","MOUND 2 41MM X 17MM","MOUND 2 41MM X 17MM"
+            ],
+        },
     ]
     
     const [login, setLogin] = useState(false)
