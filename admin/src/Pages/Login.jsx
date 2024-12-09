@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { MdAccountCircle } from "react-icons/md";
 import { IoLogInOutline } from "react-icons/io5";
 import logo from "../assets/logo.png"
-import { PageContext } from "../context/PageContext";
+import { PageContext } from "../Context/PageContext";
 import axios from "axios"
 import { toast } from "react-toastify";
 
