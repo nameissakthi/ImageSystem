@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { PageContext } from '../context/PageContext'
+import { PageContext } from '../Context/PageContext'
 import LeftSideBar from '../Components/LeftSideBar'
 import RightSideBar from '../Components/RightSideBar'
 
