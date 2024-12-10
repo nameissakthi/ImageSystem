@@ -9,6 +9,8 @@ import RightSideBar from "./Components/RightSideBar";
 import React, { useContext } from 'react'
 import { PageContext } from './Context/PageContext'
 import Order from "./Components/Order";
+import Clients from "./Pages/Clients";
+import Client from "./Components/Client";
 
 function App() {
 
@@ -29,8 +31,10 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login/>} />
             <Route path="/productionTracking" element={<ProductionTracking />} />
-            <Route path="order/:orderId" element={<Order />} />
             <Route path="/" element={<Orders />} />
+            <Route path="/order/:orderId" element={<Order />} />
+            <Route path="/clients" element={<Clients />} />
+            <Route path="/client/:clientId" element={<Client />} />
           </Routes>
         </div>
         <RightSideBar />

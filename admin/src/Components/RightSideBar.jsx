@@ -24,7 +24,7 @@ const LeftSideBar = () => {
             <button disabled className='border-[4px] px-5 py-2 rounded-2xl text-3xl w-[90%] mb-6 bg-teal-600 border-cyan-950 text-white'>
                 Admin Panel
             </button>
-            <NavLink className="flex items-center gap-3 border border-gray-300 border-r-0 px-3 py-2 rounded w-[90%] bg-cyan-700 text-xl text-white" >
+            <NavLink to="/clients" className="flex items-center gap-3 border border-gray-300 border-r-0 px-3 py-2 rounded w-[90%] bg-cyan-700 text-xl text-white" >
                 <p className='md:block text-center w-full'>CLIENTS</p>
             </NavLink>
             <NavLink className="flex items-center gap-3 border border-gray-300 border-r-0 px-3 py-2 rounded w-[90%] bg-cyan-700 text-xl text-white" >
