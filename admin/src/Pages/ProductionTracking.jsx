@@ -8,9 +8,8 @@ const ProductionTracking = () => {
 
   return (
     <div className='w-full flex justify-center items-center'>
-        <div className='w-[50%] py-4'>
-            <Navbar/>
-            <h1 className='text-6xl w-full border-b-2 border-black mb-8'>Production Tracking</h1>
+        <div className='w-[90%] py-4'>
+            <Navbar title={"Production Tracking"} />
             <div>
                 {
                     orders.filter(item=>item.summary<100).map((item, index) => {

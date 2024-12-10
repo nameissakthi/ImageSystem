@@ -3,14 +3,10 @@ import logo from "../assets/logo.png"
 import { FaHome } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({title}) => {
   return (
     <div className='flex justify-between items-center mb-5'>
-        <Link className='text-xl text-white bg-black flex gap-2 p-3 items-center' to="/"> 
-            <FaHome className='text-2xl' />
-            Home
-        </Link>
-        <img src={logo} alt="Logo" className='w-44' />
+        <h1 className='text-6xl w-full border-b-2 border-black mb-8'>{title}</h1>
     </div>
   )
 }
