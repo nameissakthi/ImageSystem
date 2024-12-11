@@ -37,14 +37,14 @@ const PageContextProvider = (props) => {
             phoneno : "1234567890",
             email : "sakthi@gmail.com",
             products : [
-                {id: 1, name: "Dater", qty: 2, img: logo},
-                {id: 2,name: "Mini Dater", qty: 2, img: logo},
-                {id: 3,name: "Approval", qty: 2, img: logo},
-                {id: 4,name: "Paid", qty: 1, img: logo},
-                {id: 5,name: "Decline", qty: 1, img: logo},
-                {id: 6,name: "Fake Note", qty: 1, img: logo},
-                {id: 7,name: "Number", qty: 1, img: logo},
-                {id: 8,name: "Locker", qty: 4, img: logo},
+                {id: 1, name: "Dater", qty: 2, img: ""},
+                {id: 2,name: "Mini Dater", qty: 2, img: ""},
+                {id: 3,name: "Approval", qty: 2, img: ""},
+                {id: 4,name: "Paid", qty: 1, img: ""},
+                {id: 5,name: "Decline", qty: 1, img: ""},
+                {id: 6,name: "Fake Note", qty: 1, img: ""},
+                {id: 7,name: "Number", qty: 1, img: ""},
+                {id: 8,name: "Locker", qty: 4, img: ""},
             ],
             selectedProducts : [
 
@@ -64,12 +64,12 @@ const PageContextProvider = (props) => {
             phoneno : "1234567890",
             email : "sakthi@gmail.com",
             products : [
-                {id: 1,name: "Dater", qty: 2, img: logo},
-                {id: 2,name: "Mini Dater", qty: 2, img: logo},
-                {id: 3,name: "Approval", qty: 2, img: logo},
-                {id: 4,name: "Paid", qty: 1, img: logo},
-                {id: 5,name: "Decline", qty: 1, img: logo},
-                {id: 6,name: "Fake Note", qty: 1, img: logo},
+                {id: 1,name: "Dater", qty: 2, img: ""},
+                {id: 2,name: "Mini Dater", qty: 2, img: ""},
+                {id: 3,name: "Approval", qty: 2, img: ""},
+                {id: 4,name: "Paid", qty: 1, img: ""},
+                {id: 5,name: "Decline", qty: 1, img: ""},
+                {id: 6,name: "Fake Note", qty: 1, img: ""},
             ],
             selectedProducts : [
                 
@@ -89,10 +89,10 @@ const PageContextProvider = (props) => {
             phoneno : "1234567890",
             email : "sakthi@gmail.com",
             products : [
-                {id: 1,name: "Dater", qty: 2, img: logo},
-                {id: 2,name: "Mini Dater", qty: 2, img: logo},
-                {id: 3,name: "Approval", qty: 2, img: logo},
-                {id: 4,name: "Paid", qty: 1, img: logo},
+                {id: 1,name: "Dater", qty: 2, img: ""},
+                {id: 2,name: "Mini Dater", qty: 2, img: ""},
+                {id: 3,name: "Approval", qty: 2, img: ""},
+                {id: 4,name: "Paid", qty: 1, img: ""},
             ],
             selectedProducts : [
                 

@@ -27,7 +27,7 @@ const Orders = () => {
                                     <p className='text-2xl'>{item.bankName}</p>
                                 </div>
                                 <div>
-                                    <Link to={`order/${item._id}`} className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-3 px-6 rounded-full shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+                                    <Link to={`/orders/${item._id}`} className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-3 px-6 rounded-full shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
                                         Check
                                     </Link>
                                 </div>

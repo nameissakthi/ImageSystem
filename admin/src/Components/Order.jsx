@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, setState } from 'react'
 import { PageContext } from '../Context/PageContext'
 import { useParams } from 'react-router-dom'
 import Navbar from './Navbar';
@@ -16,16 +16,26 @@ const Order = () => {
     if (orderData) setOrder(orderData);
   };
 
-  // const updateOrders = (orderId) => {
-  //   setOrders((prevOrders) =>
-  //     prevOrders.map((item) =>
-  //       item._id === orderId
-  //         ? { ...item, selectedProducts: order.selectedProducts }
-  //         : item
-  //     )
-  //   );
-  //   setOpen(false);
-  // };
+  const updateOrder = (newSelectedProducts) => {
+    setOrder((prevOrder) => {
+      const updatedOrder = {
+        ...prevOrder,
+        selectedProducts: [...newSelectedProducts],
+      };
+  
+      updateOrders(updatedOrder);
+      return updatedOrder;
+    });
+  };
+  
+  const updateOrders = (updatedOrder) => {
+    setOrders((prevOrders) =>
+      prevOrders.map((order) =>
+        order._id === updatedOrder._id ? updatedOrder : order
+      )
+    );
+  };
+  
 
   const onCheckHandler = (item, isChecked) => {
     if (isChecked) {
@@ -56,7 +66,15 @@ const Order = () => {
     }
   };
 
+  const onClickAccept = async () => {
+    setOpen(true)
+    await updateOrder(selectedProducts)
+  }
+
   const printHandler = () => {
+
+    console.log(order)
+    console.log(orders)
     const printWindow = window.open("", "", "width=800,height=600");
 
     const products = order.selectedProducts
@@ -64,8 +82,8 @@ const Order = () => {
       return (`
           <tr>
             <td style="text-align:center;">${index+1}</td>
-            <td>${item}</td>
-            <td style="text-align:center;">3</td>
+            <td>${item.name}</td>
+            <td style="text-align:center;">${item.qty}</td>
             <td style="text-align:center;">1200</td>
             <td style="text-align:center;">0%</td>
             <td style="text-align:center;">1220</td>
@@ -144,10 +162,6 @@ const Order = () => {
     fetchOrder();
   }, [orderId, orders])
 
-  useEffect(() => {
-    console.log(selectedProducts)
-  }, [selectedProducts])
-
   return (
     <div className='w-full flex justify-center items-center'>
         <div className='w-[90%] py-4'>
@@ -198,30 +212,30 @@ const Order = () => {
               </p>
             </div>
           }
-          {/* {
+          {
             <div className='border-2 border-slate-800 rounded-lg p-4 mt-8'>
               <div className='flex justify-between items-center'>
                 <h1 className='text-2xl'>Selected Product For Production</h1>
-                <span className='border-2 py-1 px-3 border-black rounded-full text-xl'><b>{order.selectedProducts!=undefined?order.selectedProducts.length:0}</b></span>
+                <span className='border-2 py-1 px-3 border-black rounded-full text-xl'><b>{selectedProducts!=undefined?selectedProducts.length:0}</b></span>
               </div>
               <div className='ml-8 mt-2'>
                 {
-                  order.selectedProducts && 
-                  order.selectedProducts.map((item, index) => {
+                  selectedProducts && 
+                  selectedProducts.map((item, index) => {
                     return (
                       <div key={index} className='flex justify-start gap-2 items-center'>
                         <label>
                           <input value="wedding-gift" className="peer cursor-pointer hidden after:opacity-100" readOnly checked="checked" type="checkbox"/>
                           <span className="inline-block w-4 h-5 border-2 relative cursor-pointer after:content-[''] after:absolute after:top-2/4 after:left-2/4 after:-translate-x-1/2 after:-translate-y-1/2 after:w-[10px] after:h-[10px] after:bg-[#333] after:rounded-[2px] after:opacity-0 peer-checked:after:opacity-100"></span>
                         </label>
-                        <p className='uppercase'><b>{item}</b></p>
+                        <p className='uppercase'><b>{item.name}</b></p>
                       </div>
                     )
                   })
                 }
               </div>
               <div className='w-full mt-2 flex justify-center'>
-                {order.selectedProducts!=undefined?order.selectedProducts.length!=0?<button className='bg-green-600 uppercase rounded-3xl py-2 px-6 active:scale-90 text-white' onClick={()=>setOpen(true)}><b>Accept</b></button>:null:null}
+                {selectedProducts!=undefined?selectedProducts.length!=0?<button className='bg-green-600 uppercase rounded-3xl py-2 px-6 active:scale-90 text-white' onClick={onClickAccept}><b>Accept</b></button>:null:null}
               </div>
             </div>
           }
@@ -234,7 +248,7 @@ const Order = () => {
                 <button className='bg-orange-600 text-white py-2 px-4 rounded-xl' onClick={()=>updateOrders(orderId)} >Start Production</button>
               </div>
             </div>
-          } */}
+          }
         </div>
     </div>
   )

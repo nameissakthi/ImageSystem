@@ -41,7 +41,7 @@ const Client = () => {
                                 client.products &&
                                 client.products.map((item, index) => {
                                   return (
-                                    <input className='mb-2 border border-black mx-2 py-2 bg-white text-center' type="text" name="item" key={index} value={item} />
+                                    <input className='mb-2 border border-black mx-2 py-2 bg-white text-center' type="text" name="item" key={index} defaultValue={item} />
                                   )
                                 })
                             }

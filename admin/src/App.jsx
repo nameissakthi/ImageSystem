@@ -11,6 +11,7 @@ import { PageContext } from './Context/PageContext'
 import Order from "./Components/Order";
 import Clients from "./Pages/Clients";
 import Client from "./Components/Client";
+import Home from "./Pages/Home";
 
 function App() {
 
@@ -26,18 +27,17 @@ function App() {
     <>
       <div className="flex">
         <ToastContainer autoClose={2000} />
-        <LeftSideBar />
         <div className="flex-1">
           <Routes>
             <Route path="/login" element={<Login/>} />
-            <Route path="/productionTracking" element={<ProductionTracking />} />
+            <Route path="*" element={<Home />} />
+            {/* <Route path="/productionTracking" element={<ProductionTracking />} />
             <Route path="/" element={<Orders />} />
             <Route path="/order/:orderId" element={<Order />} />
             <Route path="/clients" element={<Clients />} />
-            <Route path="/client/:clientId" element={<Client />} />
+            <Route path="/client/:clientId" element={<Client />} /> */}
           </Routes>
         </div>
-        <RightSideBar />
       </div>
     </>
   )
