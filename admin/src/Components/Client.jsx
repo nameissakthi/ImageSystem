@@ -36,15 +36,19 @@ const Client = () => {
                             <p className='mb-1 text-2xl'><b>Bank IFSC : {client.ifsc}</b></p>
                         </div>
                         <p className='mb-2 text-2xl p-2'>Address : {client.address}</p>
-                        <div className='border-2 border-slate-900 rounded-lg p-4 my-2'>
+                        <div className='border-2 border-slate-900 rounded-lg p-4 my-2 grid grid-cols-4'>
                             {
                                 client.products &&
                                 client.products.map((item, index) => {
                                   return (
-                                    <p className='mb-2' key={index}>{index+1}{") "}{item}</p>
+                                    <input className='mb-2 border border-black mx-2 py-2 bg-white text-center' type="text" name="item" key={index} value={item} />
                                   )
                                 })
                             }
+                            <div className='mx-3 my-3 col-span-4 flex justify-between'>
+                              <button className='bg-orange-500 p-2 rounded-lg text-white'>Change Product</button>
+                              <button className='bg-green-500 p-2 rounded-lg text-white'>Add Product</button>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -9,50 +9,53 @@ const Order = () => {
   const { orders, setOrders } = useContext(PageContext)
   const [order, setOrder] = useState(false)
   const [open, setOpen] = useState(false)
+  const [selectedProducts, setSelectedProducts] = useState([])
 
   const fetchOrder = () => {
     const orderData = orders.find((item) => item._id === orderId);
     if (orderData) setOrder(orderData);
   };
 
-  const updateOrders = (orderId) => {
-    setOrders((prevOrders) =>
-      prevOrders.map((item) =>
-        item._id === orderId
-          ? { ...item, selectedProducts: order.selectedProducts }
-          : item
-      )
-    );
-    setOpen(true)
+  // const updateOrders = (orderId) => {
+  //   setOrders((prevOrders) =>
+  //     prevOrders.map((item) =>
+  //       item._id === orderId
+  //         ? { ...item, selectedProducts: order.selectedProducts }
+  //         : item
+  //     )
+  //   );
+  //   setOpen(false);
+  // };
+
+  const onCheckHandler = (item, isChecked) => {
+    if (isChecked) {
+      // Add obj to selectedProducts if checked
+      setSelectedProducts((prevSelected) => {
+        if(prevSelected.id===item.id){
+          return [...prevSelected]
+        }else {
+          return [...prevSelected, item]
+        }
+      }
+      );
+    } else {
+      // Remove obj from selectedProducts if unchecked
+      setSelectedProducts((prevSelected) =>
+        prevSelected.filter((product) => product.id !== item.id)
+      );
+    }
   };
   
-  
-
-  const onCheckboxChange = (item) => {
-    setOrder((prevOrder) => {
-      const isSelected = prevOrder.selectedProducts.includes(item);
-  
-      const updatedSelectedProducts = isSelected
-        ? prevOrder.selectedProducts.filter((product) => product !== item) // Remove item
-        : [...prevOrder.selectedProducts, item]; // Add item
-  
-      return {
-        ...prevOrder,
-        selectedProducts: updatedSelectedProducts,
-      };
-    });
-  };
-
   const selectAllProducts = () => {
-    setOrder((prevOrder) => {
-      const updatedSelectedProducts = [...prevOrder.products]; // Add all products
-      return {
-        ...prevOrder,
-        selectedProducts: updatedSelectedProducts,
-      };
-    });
+    if (selectedProducts.length === order.products.length) {
+      // If all products are already selected, clear the selection
+      setSelectedProducts([]);
+    } else {
+      // Otherwise, select all products
+      setSelectedProducts(order.products.map((item) => item));
+    }
   };
-  
+
   const printHandler = () => {
     const printWindow = window.open("", "", "width=800,height=600");
 
@@ -84,17 +87,17 @@ const Order = () => {
         <body>
           <h1 style="text-align:center;">ORDER FROM</h1>
           <br />
-          <div style="width:100%; display:flex; justify-content:space-between;">
-            <p>NAME : ${order.ordererName}</p>
+          <div style="width:100%; display: grid; grid-template-columns: 1fr 1fr;">
+            <p>NAME &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: ${order.ordererName}</p>
             <p>ORDER : ${order.orderNumber}</p>
           </div>
-          <div style="width:100%; display:flex; justify-content:space-between;">
-            <p>BANK : ${order.bankName}</p>
-            <p>DATE : ${order.Date}</p>
+          <div style="width:100%; display: grid; grid-template-columns: 1fr 1fr;">
+            <p>BANK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: ${order.bankName}</p>
+            <p>DATE &nbsp;&nbsp;&nbsp;: ${order.Date}</p>
           </div>
-          <div style="width:100%; display:flex; justify-content:space-between;">
+          <div style="width:100%; display: grid; grid-template-columns: 1fr 1fr;">
             <p>PHONE NO. : ${order.phoneno}</p>
-            <p>EMAIL : ${order.email}</p>
+            <p>EMAIL &nbsp;&nbsp;: ${order.email}</p>
           </div>
           <div style="width:100%">
             <p>ADDRESS : ${order.address}</p>
@@ -103,12 +106,12 @@ const Order = () => {
           <table style="font-size: 10px;">
             <thead>
               <tr>
-                <td style="text-align:center;">NO.</td>
-                <td style="text-align:center;">ITEM DESCRIPTION</td>
-                <td style="text-align:center;">OTY</td>
-                <td style="text-align:center;">PRICE</td>
-                <td style="text-align:center;">DISCOUNT</td>
-                <td style="text-align:center;">TOTAL</td>
+                <td style="text-align:center;"><b>NO.</b></td>
+                <td style="text-align:center;"><b>ITEM DESCRIPTION</b></td>
+                <td style="text-align:center;"><b>QTY</b></td>
+                <td style="text-align:center;"><b>PRICE</b></td>
+                <td style="text-align:center;"><b>DISCOUNT</b></td>
+                <td style="text-align:center;"><b>TOTAL</b></td>
               </tr>
             </thead>
             <tbody>
@@ -141,6 +144,10 @@ const Order = () => {
     fetchOrder();
   }, [orderId, orders])
 
+  useEffect(() => {
+    console.log(selectedProducts)
+  }, [selectedProducts])
+
   return (
     <div className='w-full flex justify-center items-center'>
         <div className='w-[90%] py-4'>
@@ -148,7 +155,7 @@ const Order = () => {
           { order &&
             <div className='border-2 border-slate-800 rounded-lg p-4'>
               <div className='mb-4'>
-                <img src={order.bankLogo} alt="logo" />
+                <img src={order.bankLogo} alt="logo" className='w-[100%]' />
               </div>
               <div className='flex justify-between'>
                 <div className= 'px-2 mb-2'>
@@ -162,30 +169,36 @@ const Order = () => {
               </div>
               <div className= 'p-2 mb-3'>
                 <p className='text-2xl mb-1'>Products</p>
-                <div className='grid grid-cols-4 gap-2'>
-                  { order.products &&
+                <div className='grid grid-cols-2 gap-3'>
+                  {
                     order.products.map((item, index) => {
                       return (
-                        <div key={index} className='m-2'>
-                            <label htmlFor='item' className="text-white flex items-center gap-2">
-                              <input onChange={() => onCheckboxChange(item)} checked={order.selectedProducts.includes(item)} name='item' id='item' className="dark:border-white-400/20 dark:scale-100 transition-all duration-500 ease-in-out dark:hover:scale-110 dark:checked:scale-100 w-6 h-6" type="checkbox" />
-                              <span className='text-base text-black uppercase'>{item}</span>
-                            </label>
+                        <div className='border-2 border-black rounded-lg flex p-3' key={index}>
+                          <img src={item.img} alt="product" className='w-32' />
+                          <div className='flex flex-col flex-1 ml-4 justify-between text-sm'>
+                            <span><b>PRODUCT : {item.name}</b></span>
+                            <span><b>QUANTITY : {item.qty}</b></span>
+                          </div>
+                          <div className='flex flex-col justify-center items-end'>
+                            <input type="checkbox" className='w-8 h-8' checked={selectedProducts.includes(item)} onChange={(e)=>onCheckHandler(item, e.target.checked)}  />
+                          </div>
                         </div>
                       )
                     })
                   }
+                  <div className='col-span-2 flex justify-center mt-2'>
+                    <button onClick={()=>selectAllProducts(order.product)} className='bg-black text-white p-3 w-32'>
+                      Select All
+                    </button>
+                  </div>
                 </div>
               </div>
-              <button className='py-2 w-full bg-blue-600 mx-1 mb-4 rounded-lg text-white text-xl' onClick={selectAllProducts}>
-                Select All
-              </button>
               <p name="address" disabled className='text-black border-2 border-slate-800 rounded-lg p-4'>
-                {order.address} 
+                Address : {order.address} 
               </p>
             </div>
           }
-          {
+          {/* {
             <div className='border-2 border-slate-800 rounded-lg p-4 mt-8'>
               <div className='flex justify-between items-center'>
                 <h1 className='text-2xl'>Selected Product For Production</h1>
@@ -208,7 +221,7 @@ const Order = () => {
                 }
               </div>
               <div className='w-full mt-2 flex justify-center'>
-                {order.selectedProducts!=undefined?order.selectedProducts.length!=0?<button className='bg-green-600 uppercase rounded-3xl py-2 px-6 active:scale-90 text-white' onClick={()=>updateOrders(orderId)}><b>Accept</b></button>:null:null}
+                {order.selectedProducts!=undefined?order.selectedProducts.length!=0?<button className='bg-green-600 uppercase rounded-3xl py-2 px-6 active:scale-90 text-white' onClick={()=>setOpen(true)}><b>Accept</b></button>:null:null}
               </div>
             </div>
           }
@@ -218,10 +231,10 @@ const Order = () => {
               <button className='absolute top-3 right-3 bg-black rounded-full w-7 pb-1 text-white' onClick={()=>setOpen(false)}>x</button>
               <div className='flex justify-center gap-2'>
                 <button className='bg-blue-600 text-white py-2 px-4 rounded-xl' onClick={printHandler}>Print</button>
-                <button className='bg-orange-600 text-white py-2 px-4 rounded-xl'>Start Production</button>
+                <button className='bg-orange-600 text-white py-2 px-4 rounded-xl' onClick={()=>updateOrders(orderId)} >Start Production</button>
               </div>
             </div>
-          }
+          } */}
         </div>
     </div>
   )

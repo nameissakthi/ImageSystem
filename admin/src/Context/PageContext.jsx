@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/logo.png"
 
 export const PageContext = createContext();
 
@@ -16,7 +17,7 @@ const PageContextProvider = (props) => {
         let mm = today.getMonth() + 1;
         let dd = today.getDate();
     
-        if (dd < 10) dd = '0' + dd;
+        if (dd < 10) dd = '0' + d
         if (mm < 10) mm = '0' + mm;
     
         setDate(dd + '/' + mm + '/' + yyyy)
@@ -30,13 +31,20 @@ const PageContextProvider = (props) => {
             bankName : "HDFC Bank",
             bankLogo : "https://www.shutterstock.com/image-vector/hdfc-bank-logo-vector-indian-260nw-2351748935.jpg",
             production : "Designing Process",
-            summary : 80,
+            summary : 0,
             Date: "10/12/2024",
             Time: "12:56:05PM",
             phoneno : "1234567890",
             email : "sakthi@gmail.com",
             products : [
-                "dater","mini dater","approval","paid","decline","fake note","number","locker"
+                {id: 1, name: "Dater", qty: 2, img: logo},
+                {id: 2,name: "Mini Dater", qty: 2, img: logo},
+                {id: 3,name: "Approval", qty: 2, img: logo},
+                {id: 4,name: "Paid", qty: 1, img: logo},
+                {id: 5,name: "Decline", qty: 1, img: logo},
+                {id: 6,name: "Fake Note", qty: 1, img: logo},
+                {id: 7,name: "Number", qty: 1, img: logo},
+                {id: 8,name: "Locker", qty: 4, img: logo},
             ],
             selectedProducts : [
 
@@ -50,13 +58,18 @@ const PageContextProvider = (props) => {
             bankName : "UCO Bank",
             bankLogo : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYJEUTA-c9nIkxjBgMIHw6prRBZhF0wzWN-w&s",
             production : "Development Process",
-            summary : 95,
+            summary : 0,
             Date: "10/12/2024",
             Time: "12:56:05PM",
             phoneno : "1234567890",
             email : "sakthi@gmail.com",
             products : [
-                "dater","mini dater","approval","paid","decline","fake note"
+                {id: 1,name: "Dater", qty: 2, img: logo},
+                {id: 2,name: "Mini Dater", qty: 2, img: logo},
+                {id: 3,name: "Approval", qty: 2, img: logo},
+                {id: 4,name: "Paid", qty: 1, img: logo},
+                {id: 5,name: "Decline", qty: 1, img: logo},
+                {id: 6,name: "Fake Note", qty: 1, img: logo},
             ],
             selectedProducts : [
                 
@@ -70,22 +83,25 @@ const PageContextProvider = (props) => {
             bankName : "UCO Bank",
             bankLogo : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYJEUTA-c9nIkxjBgMIHw6prRBZhF0wzWN-w&s",
             production : "Development Process",
-            summary : 100,
+            summary : 0,
             Date: "09/12/2024",
             Time: "12:56:05PM",
             phoneno : "1234567890",
             email : "sakthi@gmail.com",
             products : [
-                "dater","mini dater","approval","paid","decline"
+                {id: 1,name: "Dater", qty: 2, img: logo},
+                {id: 2,name: "Mini Dater", qty: 2, img: logo},
+                {id: 3,name: "Approval", qty: 2, img: logo},
+                {id: 4,name: "Paid", qty: 1, img: logo},
             ],
             selectedProducts : [
                 
             ],
             address : "Coimbatore",
         },
-    ])
+    ]);
 
-    const clients = [
+    const [clients, setClients] = useState([
         {
             _id : "1",
             ifsc : "1234",
@@ -94,7 +110,7 @@ const PageContextProvider = (props) => {
             logo : "https://www.shutterstock.com/image-vector/hdfc-bank-logo-vector-indian-260nw-2351748935.jpg",
             address : "coimbatore",
             products : [
-                "MOUND 2 41MM X 17MM","MOUND 2 41MM X 17MM","MOUND 2 41MM X 17MM","MOUND 2 41MM X 17MM","MOUND 2 41MM X 17MM","MOUND 2 41MM X 17MM"
+                "dater","mini dater","approval","paid","decline","fake note","number","locker"
             ]
         },
         {
@@ -105,10 +121,10 @@ const PageContextProvider = (props) => {
             logo : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYJEUTA-c9nIkxjBgMIHw6prRBZhF0wzWN-w&s",
             address : "coimbatore",
             products : [
-                "MOUND 2 41MM X 17MM","MOUND 2 41MM X 17MM","MOUND 2 41MM X 17MM","MOUND 2 41MM X 17MM"
+                "dater","mini dater","approval","paid","decline","fake note","number","locker"
             ]
         },
-    ]
+    ]);
 
     useEffect(() => {
         formattingDate()
@@ -120,7 +136,7 @@ const PageContextProvider = (props) => {
         login, setLogin,
         orders, setOrders,
         date,
-        clients
+        clients, setClients,
     }
 
     return (
