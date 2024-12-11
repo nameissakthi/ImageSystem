@@ -22,9 +22,9 @@ const Login = () => {
 
     useEffect(()=>{
       if(login){
-        navigate("/")
+        navigate("*")
       }
-    },[localStorage.getItem("login")])
+    },[localStorage.getItem("login"), login])
 
   return (
     <div className="w-100 flex flex-col items-center justify-center mt-4">

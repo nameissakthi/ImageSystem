@@ -31,11 +31,6 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login/>} />
             <Route path="*" element={<Home />} />
-            {/* <Route path="/productionTracking" element={<ProductionTracking />} />
-            <Route path="/" element={<Orders />} />
-            <Route path="/order/:orderId" element={<Order />} />
-            <Route path="/clients" element={<Clients />} />
-            <Route path="/client/:clientId" element={<Client />} /> */}
           </Routes>
         </div>
       </div>
