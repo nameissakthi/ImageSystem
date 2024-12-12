@@ -17,11 +17,6 @@ function App() {
 
   const { setLogin, navigate, login } = useContext(PageContext)
 
-  const onClickHandler = () => {
-    setLogin(false);
-    localStorage.removeItem("login");
-    navigate("/login")
-  }
 
   return (
     <>

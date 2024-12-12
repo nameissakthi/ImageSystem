@@ -63,9 +63,13 @@ const PageContextProvider = (props) => {
         },
     ]);
 
-    useEffect(async () => {
-        await retrieveOrder();
+    const basefunction = () => {
+        retrieveOrder();
         formattingDate();
+    }
+
+    useEffect(() => {
+        basefunction();
     }, [])
 
     const value = {
