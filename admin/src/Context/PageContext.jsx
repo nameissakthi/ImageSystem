@@ -36,6 +36,7 @@ const PageContextProvider = (props) => {
         } catch (error) {
             console.error(error.message)
         }
+        formattingDate();
     }
 
     const [clients, setClients] = useState([
@@ -63,13 +64,8 @@ const PageContextProvider = (props) => {
         },
     ]);
 
-    const basefunction = () => {
-        retrieveOrder();
-        formattingDate();
-    }
-
     useEffect(() => {
-        basefunction();
+        retrieveOrder();
     }, [])
 
     const value = {
