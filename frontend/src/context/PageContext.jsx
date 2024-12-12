@@ -54,6 +54,7 @@ const PageContextProvider = (props) => {
                 return [...prevCart, { name: item.name, img: item.img, qty: 1 }];
             }
         });
+        toast.success("Added to cart")
     };
 
     const incrementQty = (itemName) => {
