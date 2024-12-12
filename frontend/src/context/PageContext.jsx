@@ -81,14 +81,14 @@ const PageContextProvider = (props) => {
     };
 
     const products = [
-        {name: "Dater", img: logo},
-        {name: "Mini Dater", img: logo},
-        {name: "Approval", img: logo},
-        {name: "Paid", img: logo},
-        {name: "Decline", img: logo},
-        {name: "Fake Note", img: logo},
-        {name: "Number", img: logo},
-        {name: "Locker", img: logo},
+        {name: "Dater", img: ""},
+        {name: "Mini Dater", img: ""},
+        {name: "Approval", img: ""},
+        {name: "Paid", img: ""},
+        {name: "Decline", img: ""},
+        {name: "Fake Note", img: ""},
+        {name: "Number", img: ""},
+        {name: "Locker", img: ""},
     ]
 
     const value = {
