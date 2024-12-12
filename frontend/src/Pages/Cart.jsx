@@ -1,22 +1,21 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { PageContext } from "../context/PageContext";
 import Navbar from "../Components/Navbar";
 import { TiShoppingCart } from "react-icons/ti";
 
 const Cart = () => {
 
-    const { cart, decrementQty, incrementQty, removeFromCart, order, setOrder } = useContext(PageContext) 
+    const { cart, decrementQty, incrementQty, removeFromCart, setOrder, setCart, newOrder } = useContext(PageContext) 
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [phoneno, setPhoneno] = useState("")
-    // const [billNumber, setBillNumber] = useState("")
 
     const generateBillNumber = () => {
       const generatedBillNumber = `${Date.now()}`;
       return generatedBillNumber
     }
 
-    const orderProducts = (e, name, email, phoneno, cart) => {
+    const orderConfirm = async (e, name, email, phoneno, cart) => {
       const bill = generateBillNumber()
       e.preventDefault();
 
@@ -72,14 +71,20 @@ const Cart = () => {
       </div>
       { cart.length!=0 &&
           <div className="w-[95%] flex justify-end">
-          <form className="flex flex-col w-[40%] mt-5 border-2 border-slate-900 p-4 rounded-2xl" onSubmit={(e)=>orderProducts(e, name, email, phoneno, cart)}>
+          <form className="flex flex-col w-[40%] mt-5 border-2 border-slate-900 p-4 rounded-2xl" >
             <input type="text" value={name} onChange={(e)=>setName(e.target.value)} placeholder="Your Name" className="mb-2 p-2 rounded-lg" required autoFocus />
             <input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="Your Email" className="mb-2 p-2 rounded-lg" required />
             <input type="tel" value={phoneno} onChange={e=>setPhoneno(e.target.value)} placeholder="Your Phone Number" className="mb-2 p-2 rounded-lg" required />
-            <button type="submit" className="p-3 bg-black text-white text-xl flex items-center justify-center gap-2">
-              <span>Order</span>
-              <TiShoppingCart className="text-2xl" />
-            </button>
+            <div className="flex justify-between items-center">
+            <button onClick={(e)=>orderConfirm(e, name, email, phoneno, cart)} type="submit" className="p-3 bg-green-500 text-white text-xl flex items-center justify-center gap-2">
+                <span>Confirm</span>
+              </button>
+              <span className="text-xl">Confirm Then Order==={">"}</span>
+            <button onClick={newOrder} type="submit" className="p-3 bg-black text-white text-xl flex items-center justify-center gap-2">
+                <span>Order</span>
+                <TiShoppingCart className="text-2xl" />
+              </button>
+            </div>
           </form>
         </div>
       }

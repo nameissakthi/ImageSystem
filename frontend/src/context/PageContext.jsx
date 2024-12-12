@@ -1,6 +1,8 @@
 import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from '../assets/logo.png'
+import axios from "axios"
+import { toast } from "react-toastify"
 
 export const PageContext = createContext();
 
@@ -10,6 +12,7 @@ const PageContextProvider = (props) => {
     const navigate = useNavigate();
 
     const [login, setLogin] = useState(false)
+    const [orderConfirm, setOrderConfirm] = useState(false)
     const [cart, setCart] = useState([])
     const [order, setOrder] = useState({
         name : "",
@@ -17,14 +20,26 @@ const PageContextProvider = (props) => {
         phoneno : "",
         billNumber : "",
         cart : [],
+        bankIfsc : "ESMF0001924",
         bankName : "ESAF Bank",
         bankLogo : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs8R4K8CldBXma-71sNRe7zl2stWdcMJIilQ&s",
         address : "Thiruvanmiyur"
     })
 
-    useEffect(() => {
-        console.log(order)
-    }, [order])
+    const newOrder = async () => {
+        try {
+            const response = await axios.post(backendUrl+"/api/order/new", { order })
+
+            if(response.data.success){
+                toast.success("Order Placed Successfully")
+                setOrder({})
+                setCart([])
+            }
+        } catch (error) {
+            console.error(error)
+            toast.error(error.message)
+        }
+    }
 
     const addToCart = (item) => {
         setCart((prevCart) => {
@@ -65,10 +80,6 @@ const PageContextProvider = (props) => {
         setCart((prevCart) => prevCart.filter((cartItem) => cartItem.name !== itemName));
     };
 
-    useEffect(()=>{
-        console.log(cart)
-    }, [cart])
-
     const products = [
         {name: "Dater", img: logo},
         {name: "Mini Dater", img: logo},
@@ -85,8 +96,9 @@ const PageContextProvider = (props) => {
         navigate,
         login, setLogin,
         products,
-        cart, addToCart, decrementQty, incrementQty, removeFromCart,
-        order, setOrder,
+        cart, addToCart, decrementQty, incrementQty, removeFromCart, setCart,
+        order, setOrder, newOrder,
+        orderConfirm, setOrderConfirm
     }
 
     return (

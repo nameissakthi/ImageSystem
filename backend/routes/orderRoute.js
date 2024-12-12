@@ -3,7 +3,7 @@ import { allOrder, newOrder, bankOrder } from "../controller/orderController.js"
 
 const orderRouter = express.Router()
 
-orderRouter.post('/list', allOrder)
+orderRouter.get('/list', allOrder)
 orderRouter.post('/new', newOrder)
 
 export default orderRouter;

@@ -2,17 +2,18 @@ import orderModel from "../models/ordersModel.js";
 
 const newOrder = async (req, res) => {
     try {
-        const { orderNumber, orderFrom, bankIfsc, bankName, bankLogo, phoneno, email, address, products } = req.body
+        const { order } = req.body
 
-        const today = new Date();
-        const yyyy = today.getFullYear();
-        let mm = today.getMonth() + 1;
-        let dd = today.getDate();
+        const date = new Date(); 
 
-        if (dd < 10) dd = '0' + dd;
-        if (mm < 10) mm = '0' + mm;
-
-        const formattedToday = dd + '/' + mm + '/' + yyyy;
+        function formatDate(date) {
+            const d = new Date(date);
+            const day = String(d.getDate()).padStart(2, '0'); // Ensures two digits for the day
+            const month = String(d.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed, add 1
+            const year = d.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
+        
 
         function convertToIST(date) {
             const istDate = new Date(date.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
@@ -26,20 +27,19 @@ const newOrder = async (req, res) => {
             return timeIn12HourFormat;
         }
         
-        const localTime = new Date();
 
         const orderData = {
-            orderNumber,
-            orderFrom,
-            bankIfsc,
-            bankName,
-            bankLogo,
-            Date : formattedToday,
-            Time : convertToIST(localTime),
-            phoneno,
-            email,
-            address,
-            products
+            orderNumber : order.billNumber,
+            orderFrom : order.name,
+            bankIfsc : order.bankIfsc,
+            bankName : order.bankName,
+            bankLogo : order.bankLogo,
+            Date : formatDate(date),
+            Time : convertToIST(date),
+            phoneno : order.phoneno,
+            email : order.email,
+            address : order.address,
+            products : order.cart
         }
 
         const newOrder = new orderModel(orderData);

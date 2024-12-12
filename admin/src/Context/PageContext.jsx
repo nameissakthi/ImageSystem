@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/logo.png"
+import axios from "axios"
 
 export const PageContext = createContext();
 
@@ -23,83 +23,20 @@ const PageContextProvider = (props) => {
         setDate(dd + '/' + mm + '/' + yyyy)
     }
     
-    const [orders, setOrders] = useState([
-        {
-            _id : "1",
-            orderNumber : 123456,
-            ordererName : "Sakthi",
-            bankName : "HDFC Bank",
-            bankLogo : "https://www.shutterstock.com/image-vector/hdfc-bank-logo-vector-indian-260nw-2351748935.jpg",
-            production : "Designing Process",
-            summary : 0,
-            Date: "10/12/2024",
-            Time: "12:56:05PM",
-            phoneno : "1234567890",
-            email : "sakthi@gmail.com",
-            products : [
-                {id: 1, name: "Dater", qty: 2, img: ""},
-                {id: 2,name: "Mini Dater", qty: 2, img: ""},
-                {id: 3,name: "Approval", qty: 2, img: ""},
-                {id: 4,name: "Paid", qty: 1, img: ""},
-                {id: 5,name: "Decline", qty: 1, img: ""},
-                {id: 6,name: "Fake Note", qty: 1, img: ""},
-                {id: 7,name: "Number", qty: 1, img: ""},
-                {id: 8,name: "Locker", qty: 4, img: ""},
-            ],
-            selectedProducts : [
+    const [orders, setOrders] = useState([]);
 
-            ],
-            address : "Coimbatore",
-        },
-        {
-            _id : "2",
-            orderNumber : 123457,
-            ordererName : "Sakthi",
-            bankName : "UCO Bank",
-            bankLogo : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYJEUTA-c9nIkxjBgMIHw6prRBZhF0wzWN-w&s",
-            production : "Development Process",
-            summary : 0,
-            Date: "10/12/2024",
-            Time: "12:56:05PM",
-            phoneno : "1234567890",
-            email : "sakthi@gmail.com",
-            products : [
-                {id: 1,name: "Dater", qty: 2, img: ""},
-                {id: 2,name: "Mini Dater", qty: 2, img: ""},
-                {id: 3,name: "Approval", qty: 2, img: ""},
-                {id: 4,name: "Paid", qty: 1, img: ""},
-                {id: 5,name: "Decline", qty: 1, img: ""},
-                {id: 6,name: "Fake Note", qty: 1, img: ""},
-            ],
-            selectedProducts : [
-                
-            ],
-            address : "Coimbatore",
-        },
-        {
-            _id : "3",
-            orderNumber : 123458,
-            ordererName : "Sakthi",
-            bankName : "UCO Bank",
-            bankLogo : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYJEUTA-c9nIkxjBgMIHw6prRBZhF0wzWN-w&s",
-            production : "Development Process",
-            summary : 0,
-            Date: "09/12/2024",
-            Time: "12:56:05PM",
-            phoneno : "1234567890",
-            email : "sakthi@gmail.com",
-            products : [
-                {id: 1,name: "Dater", qty: 2, img: ""},
-                {id: 2,name: "Mini Dater", qty: 2, img: ""},
-                {id: 3,name: "Approval", qty: 2, img: ""},
-                {id: 4,name: "Paid", qty: 1, img: ""},
-            ],
-            selectedProducts : [
-                
-            ],
-            address : "Coimbatore",
-        },
-    ]);
+    const retrieveOrder = async () => {
+        try {
+            const response = await axios.get(backendUrl+"/api/order/list")
+            if(response.data.success){
+                setOrders(response.data.orders)
+            }else{
+                console.error(response.data.message)
+            }
+        } catch (error) {
+            console.error(error.message)
+        }
+    }
 
     const [clients, setClients] = useState([
         {
@@ -126,8 +63,9 @@ const PageContextProvider = (props) => {
         },
     ]);
 
-    useEffect(() => {
-        formattingDate()
+    useEffect(async () => {
+        await retrieveOrder();
+        formattingDate();
     }, [])
 
     const value = {
