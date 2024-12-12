@@ -4,6 +4,7 @@ import 'dotenv/config'
 import connetDB from "./config/mongodb.js"
 import bankAccRouter from "./routes/bankAccRoute.js"
 import adminAccRouter from "./routes/adminAccRoute.js"
+import orderRouter from "./routes/orderRoute.js"
 
 const app = express()
 const port = process.env.PORT || 4000
@@ -14,6 +15,7 @@ app.use(cors())
 
 app.use('/api/bankAcc', bankAccRouter)
 app.use('/api/admin', adminAccRouter)
+app.use('/api/order', orderRouter)
 
 app.get("/", (req,res) => {
     res.send("API WORKING")

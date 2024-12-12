@@ -1,19 +1,19 @@
 import React, { useContext } from 'react'
 import { PageContext } from '../context/PageContext'
+import Navbar from '../Components/Navbar'
+import ProductsList from './ProductsList'
+import Cart from './Cart'
 
 const Home = () => {
 
-  const { setLogin, navigate, login } = useContext(PageContext)
-
-  const onClickHandler = () => {
-    setLogin(false);
-    localStorage.removeItem("login");
-    navigate("/login")
-  }
+  const { navigate } = useContext(PageContext)
 
   return (
     <div>
-      <button onClick={onClickHandler}>LogOut</button>
+      <div>
+        <Navbar />
+        <ProductsList />
+      </div>
     </div>
   )
 }

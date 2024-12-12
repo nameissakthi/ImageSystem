@@ -1,5 +1,6 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import logo from '../assets/logo.png'
 
 export const PageContext = createContext();
 
@@ -9,11 +10,83 @@ const PageContextProvider = (props) => {
     const navigate = useNavigate();
 
     const [login, setLogin] = useState(false)
+    const [cart, setCart] = useState([])
+    const [order, setOrder] = useState({
+        name : "",
+        email : "",
+        phoneno : "",
+        billNumber : "",
+        cart : [],
+        bankName : "ESAF Bank",
+        bankLogo : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs8R4K8CldBXma-71sNRe7zl2stWdcMJIilQ&s",
+        address : "Thiruvanmiyur"
+    })
+
+    useEffect(() => {
+        console.log(order)
+    }, [order])
+
+    const addToCart = (item) => {
+        setCart((prevCart) => {
+            const existingItem = prevCart.find((cartItem) => cartItem.name === item.name);
+            if (existingItem) {
+                return prevCart.map((cartItem) =>
+                    cartItem.name === item.name
+                        ? { ...cartItem, qty: cartItem.qty + 1 }
+                        : cartItem
+                );
+            } else {
+                return [...prevCart, { name: item.name, img: item.img, qty: 1 }];
+            }
+        });
+    };
+
+    const incrementQty = (itemName) => {
+        setCart((prevCart) =>
+            prevCart.map((cartItem) =>
+                cartItem.name === itemName
+                    ? { ...cartItem, qty: cartItem.qty + 1 }
+                    : cartItem
+            )
+        );
+    };
+
+    const decrementQty = (itemName) => {
+        setCart((prevCart) =>
+            prevCart.map((cartItem) =>
+                cartItem.name === itemName && cartItem.qty > 1
+                    ? { ...cartItem, qty: cartItem.qty - 1 }
+                    : cartItem
+            ).filter((cartItem) => cartItem.qty > 0)
+        );
+    };
+
+    const removeFromCart = (itemName) => {
+        setCart((prevCart) => prevCart.filter((cartItem) => cartItem.name !== itemName));
+    };
+
+    useEffect(()=>{
+        console.log(cart)
+    }, [cart])
+
+    const products = [
+        {name: "Dater", img: logo},
+        {name: "Mini Dater", img: logo},
+        {name: "Approval", img: logo},
+        {name: "Paid", img: logo},
+        {name: "Decline", img: logo},
+        {name: "Fake Note", img: logo},
+        {name: "Number", img: logo},
+        {name: "Locker", img: logo},
+    ]
 
     const value = {
         backendUrl,
         navigate,
-        login, setLogin
+        login, setLogin,
+        products,
+        cart, addToCart, decrementQty, incrementQty, removeFromCart,
+        order, setOrder,
     }
 
     return (
