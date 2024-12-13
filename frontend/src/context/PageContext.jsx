@@ -34,6 +34,8 @@ const PageContextProvider = (props) => {
                 toast.success("Order Placed Successfully")
                 setOrder({})
                 setCart([])
+            }else {
+                toast.error(response.data.message)
             }
         } catch (error) {
             console.error(error)
@@ -54,7 +56,16 @@ const PageContextProvider = (props) => {
                 return [...prevCart, { name: item.name, img: item.img, qty: 1 }];
             }
         });
-        toast.success("Added to cart")
+        toast.success('Added To Cart', {
+            position: "top-right",
+            autoClose: 500,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            });
     };
 
     const incrementQty = (itemName) => {

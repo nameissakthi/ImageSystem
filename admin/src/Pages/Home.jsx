@@ -10,6 +10,7 @@ import Order from "../Components/Order";
 import LeftSideBar from "../Components/LeftSideBar";
 import RightSideBar from "../Components/RightSideBar"
 import { PageContext } from "../Context/PageContext";
+import { useEffect } from "react";
 
 function Home() {
 
@@ -21,6 +22,10 @@ function Home() {
     navigate("/login")
   }
 
+  useEffect(()=>{
+    navigate('/orders')
+  },[])
+
   return (
     <>
       <div className="flex">
@@ -29,8 +34,8 @@ function Home() {
         <div className="flex-1">
           <Routes>
             <Route path="/productionTracking" element={<ProductionTracking />} />
-            <Route path="/orders" element={<Orders />} />
             <Route path="orders/:orderId" element={<Order />} />
+            <Route path="/orders" element={<Orders />} />
             <Route path="/clients" element={<Clients />} />
             <Route path="clients/:clientId" element={<Client />} />
           </Routes>
