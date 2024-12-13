@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { PageContext } from '../context/PageContext'
 import Navbar from '../Components/Navbar'
 import ProductsList from './ProductsList'
-import Cart from './Cart'
+import Sidebar from '../Components/Sidebar'
 
 const Home = () => {
 
@@ -10,9 +10,16 @@ const Home = () => {
 
   return (
     <div>
-      <div>
+      <div className='mb-10 h-screen'>
         <Navbar />
-        <ProductsList />
+        <div className='flex justify-between mt-10'>
+          <div className='flex-1'>
+            <ProductsList />
+          </div>
+          <div className='items-stretch w-80'>
+            <Sidebar />
+          </div>
+        </div>
       </div>
     </div>
   )

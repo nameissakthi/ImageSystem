@@ -44,6 +44,10 @@ const orderSchema = new mongoose.Schema({
         type : Array,
         required : true
     },
+    totalAmt : {
+        type : Number, 
+        required : true
+    }
 })
 
 const orderModel = mongoose.models.order || mongoose.model('order', orderSchema)

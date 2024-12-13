@@ -26,7 +26,11 @@ const newOrder = async (req, res) => {
             const timeIn12HourFormat = istDate.toLocaleString('en-US', options);
             return timeIn12HourFormat;
         }
-        
+
+        let totalAmt = 0
+        if(order.cart!=undefined){
+            order.cart.map(item=> totalAmt+=item.totalAmt)
+        }
 
         const orderData = {
             orderNumber : order.billNumber,
@@ -39,7 +43,8 @@ const newOrder = async (req, res) => {
             phoneno : order.phoneno,
             email : order.email,
             address : order.address,
-            products : order.cart
+            products : order.cart,
+            totalAmt,
         }
 
         const newOrder = new orderModel(orderData);

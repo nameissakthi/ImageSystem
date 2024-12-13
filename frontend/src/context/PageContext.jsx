@@ -1,12 +1,13 @@
 import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from '../assets/logo.png'
 import axios from "axios"
 import { toast } from "react-toastify"
 
 export const PageContext = createContext();
 
 const PageContextProvider = (props) => {
+
+    const currency = "₹"
 
     const backendUrl = import.meta.env.VITE_BACKEND_URL
     const navigate = useNavigate();
@@ -32,7 +33,6 @@ const PageContextProvider = (props) => {
 
             if(response.data.success){
                 toast.success("Order Placed Successfully")
-                setOrder({})
                 setCart([])
             }else {
                 toast.error(response.data.message)
@@ -49,22 +49,22 @@ const PageContextProvider = (props) => {
             if (existingItem) {
                 return prevCart.map((cartItem) =>
                     cartItem.name === item.name
-                        ? { ...cartItem, qty: cartItem.qty + 1 }
+                        ? { ...cartItem, qty: cartItem.qty + 1, totalAmt: (cartItem.qty+1)*item.price }
                         : cartItem
                 );
             } else {
-                return [...prevCart, { name: item.name, img: item.img, qty: 1 }];
+                return [...prevCart, { name: item.name, img: item.img, qty: 1, price: item.price, totalAmt: item.price }];
             }
         });
         toast.success('Added To Cart', {
-            position: "top-right",
+            position: "top-center",
             autoClose: 500,
             hideProgressBar: true,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
             progress: undefined,
-            theme: "light",
+            theme: "dark",
             });
     };
 
@@ -93,15 +93,19 @@ const PageContextProvider = (props) => {
     };
 
     const products = [
-        {name: "Dater", img: ""},
-        {name: "Mini Dater", img: ""},
-        {name: "Approval", img: ""},
-        {name: "Paid", img: ""},
-        {name: "Decline", img: ""},
-        {name: "Fake Note", img: ""},
-        {name: "Number", img: ""},
-        {name: "Locker", img: ""},
+        {name: "Dater", img: "", price: 100},
+        {name: "Mini Dater", img: "", price: 100},
+        {name: "Approval", img: "", price: 100},
+        {name: "Paid", img: "", price: 100},
+        {name: "Decline", img: "", price: 100},
+        {name: "Fake Note", img: "", price: 100},
+        {name: "Number", img: "", price: 100},
+        {name: "Locker", img: "", price: 100},
     ]
+
+    // useEffect(()=>{
+    //     if(order.billNumber)
+    // },[order])
 
     const value = {
         backendUrl,
@@ -110,7 +114,8 @@ const PageContextProvider = (props) => {
         products,
         cart, addToCart, decrementQty, incrementQty, removeFromCart, setCart,
         order, setOrder, newOrder,
-        orderConfirm, setOrderConfirm
+        orderConfirm, setOrderConfirm,
+        currency
     }
 
     return (

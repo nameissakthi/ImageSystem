@@ -106,7 +106,7 @@ const Order = () => {
           <h1 style="text-align:center;">ORDER FROM</h1>
           <br />
           <div style="width:100%; display: grid; grid-template-columns: 1fr 1fr;">
-            <p>NAME &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: ${order.ordererName}</p>
+            <p>NAME &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: ${order.orderFrom}</p>
             <p>ORDER : ${order.orderNumber}</p>
           </div>
           <div style="width:100%; display: grid; grid-template-columns: 1fr 1fr;">
@@ -173,7 +173,7 @@ const Order = () => {
               </div>
               <div className='flex justify-between'>
                 <div className= 'px-2 mb-2'>
-                  <p className='mb-1'><b>Order By :{order.ordererName}</b></p>
+                  <p className='mb-1'><b>Order By : {order.orderFrom}</b></p>
                   <p><b>Order From : {order.bankName}</b></p>
                 </div>
                 <div className= 'px-2'>

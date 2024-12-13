@@ -3,11 +3,19 @@ import { PageContext } from '../Context/PageContext'
 import Navbar from '../Components/Navbar'
 import { IoIosNotifications } from "react-icons/io";
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 
 const Orders = () => {
 
     const { orders, date } = useContext(PageContext)
+
+    const [orderReversed, setOrderReversed] = useState([])
+
+    useEffect(()=>{
+        setOrderReversed(orders.reverse())
+    }, [orders])
 
   return (
     <div className='w-full flex justify-center items-center'>
@@ -15,7 +23,7 @@ const Orders = () => {
             <Navbar title={"Orders"}/>
             <div>
                 {
-                    orders.map((item, index) => {
+                    orderReversed.map((item, index) => {
                         return (
                             <div key={index} className='flex justify-between py-2 pr-8 border-2 border-slate-700 mb-4 rounded-lg items-center relative'>
                                 {item.Date===date?<IoIosNotifications className='absolute top-[-20px] left-[-25px] -rotate-45 text-5xl text-yellow-400' />:null}
