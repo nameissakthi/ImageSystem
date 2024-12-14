@@ -26,7 +26,6 @@ const Orders = () => {
                     orderReversed.map((item, index) => {
                         return (
                             <div key={index} className='flex justify-between py-2 pr-8 border-2 border-slate-700 mb-4 rounded-lg items-center relative'>
-                                {item.Date===date?<IoIosNotifications className='absolute top-[-20px] left-[-25px] -rotate-45 text-5xl text-yellow-400' />:null}
                                 <div className='flex-shrink px-4 text-3xl'>
                                     <p className='bg-black h-fit p-2 text-white'>{index+1}</p>
                                 </div>
