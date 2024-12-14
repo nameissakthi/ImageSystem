@@ -16,7 +16,7 @@ const PageContextProvider = (props) => {
     const [orderConfirm, setOrderConfirm] = useState(false)
     const [cart, setCart] = useState([])
     const [order, setOrder] = useState({
-        name : "",
+        empNum : "",
         email : "",
         phoneno : "",
         billNumber : "",

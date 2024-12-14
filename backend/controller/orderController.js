@@ -1,4 +1,5 @@
 import orderModel from "../models/ordersModel.js";
+import sendEmail from "./emailController.js";
 
 const newOrder = async (req, res) => {
     try {
@@ -34,7 +35,7 @@ const newOrder = async (req, res) => {
 
         const orderData = {
             orderNumber : order.billNumber,
-            orderFrom : order.name,
+            EmpNum : order.empNum,
             bankIfsc : order.bankIfsc,
             bankName : order.bankName,
             bankLogo : order.bankLogo,
@@ -52,6 +53,13 @@ const newOrder = async (req, res) => {
 
 
         res.json({success : true, message : "Order Placed"})
+
+        // await sendEmail({
+        //     body : {
+        //         clientEmail : order.email,
+        //         adminEmail : "svel7252@gmail.com"
+        //     }
+        // })
 
     } catch (error) {
         console.log(error)

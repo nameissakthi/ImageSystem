@@ -6,10 +6,7 @@ const LeftSideBar = () => {
   return (
     <div className='w-[18%] min-h-screen border-r-2 bg-slate-300 pb-2'>
         <div className='fixed w-[18%]'>
-            <div className='flex flex-col gap-4 pt-6 text-[15px] items-center h-screen'>
-                <button disabled className='border-[4px] px-5 py-2 rounded-2xl text-3xl w-[90%] mb-6 bg-teal-600 border-cyan-950 text-white'>
-                    Admin Panel
-                </button>
+            <div className='flex flex-col gap-4 text-[15px] items-center h-screen pt-20'>
                 <NavLink to="/clients" className="flex items-center gap-3 border border-gray-300 border-r-0 px-3 py-2 rounded w-[90%] bg-cyan-700 text-xl text-white" >
                     <p className='md:block text-center w-full'>CLIENTS</p>
                 </NavLink>

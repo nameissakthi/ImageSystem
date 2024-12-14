@@ -5,7 +5,7 @@ const orderSchema = new mongoose.Schema({
         type : String,
         required : true
     },  
-    orderFrom : {
+    EmpNum : {
         type : String,
         required : true
     },

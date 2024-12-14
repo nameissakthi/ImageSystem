@@ -106,15 +106,15 @@ const Order = () => {
           <h1 style="text-align:center;">ORDER FROM</h1>
           <br />
           <div style="width:100%; display: grid; grid-template-columns: 1fr 1fr;">
-            <p>NAME &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: ${order.orderFrom}</p>
+            <p>EMPLOYEE NUM : ${order.EmpNum}</p>
             <p>ORDER : ${order.orderNumber}</p>
           </div>
           <div style="width:100%; display: grid; grid-template-columns: 1fr 1fr;">
-            <p>BANK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: ${order.bankName}</p>
+            <p>BANK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: ${order.bankName}</p>
             <p>DATE &nbsp;&nbsp;&nbsp;: ${order.Date}</p>
           </div>
           <div style="width:100%; display: grid; grid-template-columns: 1fr 1fr;">
-            <p>PHONE NO. : ${order.phoneno}</p>
+            <p>PHONE NO. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: ${order.phoneno}</p>
             <p>EMAIL &nbsp;&nbsp;: ${order.email}</p>
           </div>
           <div style="width:100%">
@@ -173,7 +173,7 @@ const Order = () => {
               </div>
               <div className='flex justify-between'>
                 <div className= 'px-2 mb-2'>
-                  <p className='mb-1'><b>Order By : {order.orderFrom}</b></p>
+                  <p className='mb-1'><b>Employee Number : {order.EmpNum}</b></p>
                   <p><b>Order From : {order.bankName}</b></p>
                 </div>
                 <div className= 'px-2'>
