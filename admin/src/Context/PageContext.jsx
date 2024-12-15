@@ -10,6 +10,7 @@ const PageContextProvider = (props) => {
     const navigate = useNavigate();
     const [date, setDate] = useState("")
     const [login, setLogin] = useState(false)
+    const discount = 0
 
     const formattingDate = () => {
         const today = new Date();
@@ -72,12 +73,13 @@ const PageContextProvider = (props) => {
 
     const [production, setProduction] = useState([])
 
+
     useEffect(() => {
         retrieveOrder();
     }, [])
 
     const value = {
-        backendUrl,
+        backendUrl, discount,
         navigate,
         login, setLogin,
         orders, setOrders,

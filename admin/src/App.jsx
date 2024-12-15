@@ -2,15 +2,8 @@ import { Routes, Route } from "react-router-dom"
 import Login from "./Pages/Login"
 import { ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
-import ProductionTracking from "./Pages/ProductionTracking";
-import Orders from "./Pages/Orders";
-import LeftSideBar from "./Components/LeftSideBar";
-import RightSideBar from "./Components/RightSideBar";
 import React, { useContext } from 'react'
 import { PageContext } from './Context/PageContext'
-import Order from "./Components/Order";
-import Clients from "./Pages/Clients";
-import Client from "./Components/Client";
 import Home from "./Pages/Home";
 
 function App() {

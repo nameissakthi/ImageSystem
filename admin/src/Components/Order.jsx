@@ -7,7 +7,7 @@ import { toast } from 'react-toastify'
 const Order = () => {
 
   const { orderId } = useParams();
-  const { orders, setOrders, designers, production, setProduction } = useContext(PageContext)
+  const { orders, setOrders, designers, production, setProduction, discount } = useContext(PageContext)
   const [order, setOrder] = useState(false)
   const [open, setOpen] = useState(false)
   const [selectedProducts, setSelectedProducts] = useState([])
@@ -97,6 +97,9 @@ const Order = () => {
 
     const products = order.selectedProducts
 
+    let Amount = 0;
+    products.map(item=>Amount+=item.totalAmt)
+
     console.log(products)
     const prod = products.map((item, index) => {
       return (`
@@ -104,9 +107,9 @@ const Order = () => {
             <td style="text-align:center;">${index+1}</td>
             <td>${item.name}</td>
             <td style="text-align:center;">${item.qty}</td>
-            <td style="text-align:center;">1200</td>
-            <td style="text-align:center;">0%</td>
-            <td style="text-align:center;">1220</td>
+            <td style="text-align:center;">${item.totalAmt}</td>
+            <td style="text-align:center;">${discount}</td>
+            <td style="text-align:center;">${item.totalAmt-(item.totalAmt*(discount/100))}</td>
           </tr>
         `)
     })
@@ -163,7 +166,10 @@ const Order = () => {
                 <td>DATE</td><td colspan="3"></td><td>SHIPPING</td><td></td>
               </tr>
               <tr>
-                <td>DATE RECEIVED</td><td colspan="3"></td><td>TOTAL</td><td></td>
+                <td>DATE RECEIVED</td><td colspan="3"></td><td>TOTAL</td><td style="text-align:center;">${Amount}</td>
+              </tr>
+              <tr>
+                <td>DESIGNER</td><td colspan="5">${designer[0]}</td>
               </tr>
             </tfoot>
           </table>
