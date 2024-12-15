@@ -10,7 +10,6 @@ import Order from "../Components/Order";
 import LeftSideBar from "../Components/LeftSideBar";
 import RightSideBar from "../Components/RightSideBar"
 import { PageContext } from "../Context/PageContext";
-import { useEffect } from "react";
 
 function Home() {
 
@@ -21,10 +20,6 @@ function Home() {
     localStorage.removeItem("login");
     navigate("/login")
   }
-
-  useEffect(()=>{
-    navigate('/orders')
-  },[])
 
   return (
     <>

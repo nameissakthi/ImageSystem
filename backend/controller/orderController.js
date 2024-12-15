@@ -34,6 +34,7 @@ const newOrder = async (req, res) => {
         }
 
         const orderData = {
+            name : order.name,
             orderNumber : order.billNumber,
             EmpNum : order.empNum,
             bankIfsc : order.bankIfsc,
@@ -46,6 +47,7 @@ const newOrder = async (req, res) => {
             address : order.address,
             products : order.cart,
             totalAmt,
+            remark : order.remark
         }
 
         const newOrder = new orderModel(orderData);

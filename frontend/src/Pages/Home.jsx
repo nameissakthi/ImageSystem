@@ -3,6 +3,7 @@ import { PageContext } from '../context/PageContext'
 import Navbar from '../Components/Navbar'
 import ProductsList from './ProductsList'
 import Sidebar from '../Components/Sidebar'
+import Cart from '../Components/Cart'
 
 const Home = () => {
 
@@ -10,15 +11,16 @@ const Home = () => {
 
   return (
     <div>
-      <div className='mb-10 h-screen'>
+      <div className=' h-screen'>
         <Navbar />
-        <div className='flex justify-between mt-10'>
-          <div className='flex-1'>
-            <ProductsList />
-          </div>
-          <div className='items-stretch w-80'>
-            <Sidebar />
-          </div>
+        <div className='flex justify-center mt-3'>
+          <ProductsList />
+        </div>
+        <div className='flex justify-center'>
+          <Cart />
+        </div>
+        <div className='flex justify-center'>
+          <Sidebar />
         </div>
       </div>
     </div>

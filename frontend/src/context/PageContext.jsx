@@ -2,6 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"
 import { toast } from "react-toastify"
+import product_img from '../assets/products/products.js'
 
 export const PageContext = createContext();
 
@@ -16,6 +17,7 @@ const PageContextProvider = (props) => {
     const [orderConfirm, setOrderConfirm] = useState(false)
     const [cart, setCart] = useState([])
     const [order, setOrder] = useState({
+        name : "",
         empNum : "",
         email : "",
         phoneno : "",
@@ -24,7 +26,8 @@ const PageContextProvider = (props) => {
         bankIfsc : "ESMF0001924",
         bankName : "ESAF Bank",
         bankLogo : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs8R4K8CldBXma-71sNRe7zl2stWdcMJIilQ&s",
-        address : "Thiruvanmiyur"
+        address : "Thiruvanmiyur",
+        remark : ""
     })
 
     const newOrder = async () => {
@@ -43,20 +46,20 @@ const PageContextProvider = (props) => {
         }
     }
 
-    const addToCart = (item) => {
+    const addToCart = (item, qty) => {
         setCart((prevCart) => {
             const existingItem = prevCart.find((cartItem) => cartItem.name === item.name);
             if (existingItem) {
                 return prevCart.map((cartItem) =>
                     cartItem.name === item.name
-                        ? { ...cartItem, qty: cartItem.qty + 1, totalAmt: (cartItem.qty+1)*item.price }
+                        ? { ...cartItem, qty: Number(cartItem.qty+qty[cartItem.name]), totalAmt: cartItem.totalAmt+(qty[cartItem.name]*item.price) }
                         : cartItem
                 );
             } else {
-                return [...prevCart, { name: item.name, img: item.img, qty: 1, price: item.price, totalAmt: item.price }];
+                return [...prevCart, { name: item.name, img: item.img, qty: qty[item.name], price: item.price, totalAmt: qty[item.name]*item.price }];
             }
         });
-        toast.success('Added To Cart', {
+        toast.success(`${item.name} Added To Cart`, {
             position: "top-center",
             autoClose: 500,
             hideProgressBar: true,
@@ -93,19 +96,19 @@ const PageContextProvider = (props) => {
     };
 
     const products = [
-        {name: "Dater", img: "", price: 100},
-        {name: "Mini Dater", img: "", price: 100},
-        {name: "Approval", img: "", price: 100},
-        {name: "Paid", img: "", price: 100},
-        {name: "Decline", img: "", price: 100},
-        {name: "Fake Note", img: "", price: 100},
-        {name: "Number", img: "", price: 100},
-        {name: "Locker", img: "", price: 100},
+        {name: "Dater", img: product_img.cash_received_dater, price: 260},
+        {name: "Mini Dater", img: product_img.cleared_seal_dater, price: 70},
+        {name: "Approval", img: product_img.seal_authorized, price: 70},
+        {name: "Paid", img: product_img.cash_paid_dater, price: 70},
+        {name: "Decline", img: product_img.round_seal, price: 70},
+        {name: "Fake Note", img: product_img.transfer_seal, price: 70},
+        {name: "Number", img: product_img.number_seal, price: 70},
+        {name: "Locker", img: product_img.seal_branch_manager, price: 70},
     ]
 
     // useEffect(()=>{
-    //     if(order.billNumber)
-    // },[order])
+    //     console.log(cart)
+    // },[cart])
 
     const value = {
         backendUrl,

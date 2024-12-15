@@ -5,6 +5,10 @@ const orderSchema = new mongoose.Schema({
         type : String,
         required : true
     },  
+    name : {
+        type : String,
+        required : true
+    },
     EmpNum : {
         type : String,
         required : true
@@ -46,6 +50,10 @@ const orderSchema = new mongoose.Schema({
     },
     totalAmt : {
         type : Number, 
+        required : true
+    },
+    remark : {
+        type : String,
         required : true
     }
 })

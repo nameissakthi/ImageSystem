@@ -64,6 +64,14 @@ const PageContextProvider = (props) => {
         },
     ]);
 
+    const designers = [
+        {id:1,name : "Raghu"},
+        {id:2,name : "Hayram"},
+        {id:3,name : "Sriram"}
+    ]
+
+    const [production, setProduction] = useState([])
+
     useEffect(() => {
         retrieveOrder();
     }, [])
@@ -75,6 +83,8 @@ const PageContextProvider = (props) => {
         orders, setOrders,
         date,
         clients, setClients,
+        designers,
+        production, setProduction
     }
 
     return (

@@ -2,14 +2,16 @@ import React, { useContext, useEffect, useState, setState } from 'react'
 import { PageContext } from '../Context/PageContext'
 import { useParams } from 'react-router-dom'
 import Navbar from './Navbar';
+import { toast } from 'react-toastify'
 
 const Order = () => {
 
   const { orderId } = useParams();
-  const { orders, setOrders } = useContext(PageContext)
+  const { orders, setOrders, designers, production, setProduction } = useContext(PageContext)
   const [order, setOrder] = useState(false)
   const [open, setOpen] = useState(false)
   const [selectedProducts, setSelectedProducts] = useState([])
+  const [designer, setDesigner] = useState([])
 
   const fetchOrder = () => {
     const orderData = orders.find((item) => item._id === orderId);
@@ -39,9 +41,8 @@ const Order = () => {
 
   const onCheckHandler = (item, isChecked) => {
     if (isChecked) {
-      // Add obj to selectedProducts if checked
       setSelectedProducts((prevSelected) => {
-        if(prevSelected.id===item.id){
+        if(prevSelected.name===item.name){
           return [...prevSelected]
         }else {
           return [...prevSelected, item]
@@ -49,9 +50,8 @@ const Order = () => {
       }
       );
     } else {
-      // Remove obj from selectedProducts if unchecked
       setSelectedProducts((prevSelected) =>
-        prevSelected.filter((product) => product.id !== item.id)
+        prevSelected.filter((product) => product.name !== item.name)
       );
     }
   };
@@ -68,7 +68,26 @@ const Order = () => {
 
   const onClickAccept = async () => {
     setOpen(true)
-    await updateOrder(selectedProducts)
+    updateOrder(selectedProducts)
+  }
+
+  const selectDesigner = (designer, isChecked) => {
+    if(isChecked){
+      setDesigner(prevDesigner=>{
+        if(prevDesigner===designer){return [...prevDesigner]}
+        else{return [...prevDesigner, designer]}
+      })
+    }else{
+      setDesigner(prevDesigner=>prevDesigner.filter((designerName)=>designerName !== designer))
+    }
+  }
+
+  const assignDesigners = () => {
+    setProduction(preProduction=>{
+      return [...preProduction, { order : order, designer : designer, level : 0 }]
+    })
+    setOpen(false)
+    toast.success("Production Started", { hideProgressBar: true, autoClose: 2000 })
   }
 
   const printHandler = () => {
@@ -168,17 +187,25 @@ const Order = () => {
           <Navbar title={"Order"} />
           { order &&
             <div className='border-2 border-slate-800 rounded-lg p-4'>
-              <div className='mb-4'>
-                <img src={order.bankLogo} alt="logo" className='w-[100%]' />
+              <div className='mb-4 flex justify-center'>
+                <img src={order.bankLogo} alt="logo" className='w-64' />
               </div>
-              <div className='flex justify-between'>
+              <div className='grid grid-cols-2'>
                 <div className= 'px-2 mb-2'>
                   <p className='mb-1'><b>Employee Number : {order.EmpNum}</b></p>
                   <p><b>Order From : {order.bankName}</b></p>
                 </div>
-                <div className= 'px-2'>
+                <div className= 'px-2 ml-40'>
                   <p className='mb-1'><b>Date : {order.Date}</b></p>
                   <p><b>Time : {order.Time}</b></p>
+                </div>
+                <div className= 'px-2 mb-2'>
+                  <p className='mb-1'><b>Emplyee Name: {order.name}</b></p>
+                  <p><b>Mobile Number : {order.phoneno}</b></p>
+                </div>
+                <div className= 'px-2 mb-2 ml-40'>
+                  <p className='mb-1'><b>Mail Id : {order.email}</b></p>
+                  <p className='mb-1'><b>Branch: {order.address}</b></p>
                 </div>
               </div>
               <div className= 'p-2 mb-3'>
@@ -208,7 +235,7 @@ const Order = () => {
                 </div>
               </div>
               <p name="address" disabled className='text-black border-2 border-slate-800 rounded-lg p-4'>
-                Address : {order.address} 
+                Remark : {order.remark} 
               </p>
             </div>
           }
@@ -235,7 +262,7 @@ const Order = () => {
                 }
               </div>
               <div className='w-full mt-2 flex justify-center'>
-                {selectedProducts!=undefined?selectedProducts.length!=0?<button className='bg-green-600 uppercase rounded-3xl py-2 px-6 active:scale-90 text-white' onClick={onClickAccept}><b>Accept</b></button>:null:null}
+                {selectedProducts!=undefined?selectedProducts.length!=0?<button className='bg-green-600 uppercase rounded-3xl py-2 px-6 active:scale-90 text-white' onClick={onClickAccept}><b>Start Production</b></button>:null:null}
               </div>
             </div>
           }
@@ -243,9 +270,19 @@ const Order = () => {
             open && 
             <div className='isolate aspect-video bg-white/70 shadow-lg ring-1 ring-black/5 rounded-lg w-72 h-52 fixed top-[40%] left-[40%] flex flex-col justify-center items-center'>
               <button className='absolute top-3 right-3 bg-black rounded-full w-7 pb-1 text-white' onClick={()=>setOpen(false)}>x</button>
-              <div className='flex justify-center gap-2'>
-                <button className='bg-blue-600 text-white py-2 px-4 rounded-xl' onClick={printHandler}>Print</button>
-                <button className='bg-orange-600 text-white py-2 px-4 rounded-xl' onClick={()=>updateOrders(orderId)} >Start Production</button>
+              <div className='flex flex-col justify-center gap-2'>
+                <h3 className='text-xl'><b>Choose a Designer</b></h3>
+                <div className='flex flex-col my-2 self-center'>
+                  {
+                    designers.map((designer, index)=>
+                      <label htmlFor="name" key={index}>
+                        <input type="checkbox" id='name' value={designer.name} onChange={(e)=>selectDesigner(e.target.value, e.target.checked)}/> {designer.name}
+                      </label>
+                    )
+                  }
+                </div>
+                <button className='bg-blue-600 text-white py-2 px-4 rounded-xl' onClick={assignDesigners}>Assign</button>
+                {/* <button className='bg-orange-600 text-white py-2 px-4 rounded-xl' onClick={()=>updateOrders(orderId)} >Start Production</button> */}
               </div>
             </div>
           }
