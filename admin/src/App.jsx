@@ -21,7 +21,7 @@ function App() {
   return (
     <>
       <div className="flex">
-        <ToastContainer autoClose={2000} />
+        <ToastContainer autoClose={2000} containerId={`containerA`} />
         <div className="flex-1">
           <Routes>
             <Route path="/login" element={<Login/>} />

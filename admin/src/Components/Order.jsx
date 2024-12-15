@@ -88,15 +88,16 @@ const Order = () => {
     })
     setOpen(false)
     toast.success("Production Started", { hideProgressBar: true, autoClose: 2000 })
+    printHandler()
   }
 
   const printHandler = () => {
-
-    console.log(order)
-    console.log(orders)
+    
     const printWindow = window.open("", "", "width=800,height=600");
 
     const products = order.selectedProducts
+
+    console.log(products)
     const prod = products.map((item, index) => {
       return (`
           <tr>
