@@ -25,7 +25,7 @@ const Orders = () => {
                 {
                     orderReversed.map((item, index) => {
                         return (
-                            <div key={index} className='flex justify-between py-2 pr-8 border-2 border-slate-700 mb-4 rounded-lg items-center relative'>
+                            <div key={index} className='flex justify-between py-2 pr-8 border-2 border-slate-700 mb-4 rounded-lg items-center'>
                                 <div className='flex-shrink px-4 text-3xl'>
                                     <p className='bg-black h-fit p-2 text-white'>{index+1}</p>
                                 </div>

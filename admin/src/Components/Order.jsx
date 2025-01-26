@@ -3,11 +3,12 @@ import { PageContext } from '../Context/PageContext'
 import { useParams } from 'react-router-dom'
 import Navbar from './Navbar';
 import { toast } from 'react-toastify'
+import axios from 'axios';
 
 const Order = () => {
 
   const { orderId } = useParams();
-  const { orders, setOrders, designers, production, setProduction, discount } = useContext(PageContext)
+  const { orders, setOrders, designers, navigate, discount, backendUrl, fetchProduction } = useContext(PageContext)
   const [order, setOrder] = useState(false)
   const [open, setOpen] = useState(false)
   const [selectedProducts, setSelectedProducts] = useState([])
@@ -58,10 +59,8 @@ const Order = () => {
   
   const selectAllProducts = () => {
     if (selectedProducts.length === order.products.length) {
-      // If all products are already selected, clear the selection
       setSelectedProducts([]);
     } else {
-      // Otherwise, select all products
       setSelectedProducts(order.products.map((item) => item));
     }
   };
@@ -82,12 +81,26 @@ const Order = () => {
     }
   }
 
-  const assignDesigners = () => {
-    setProduction(preProduction=>{
-      return [...preProduction, { order : order, designer : designer, level : 0 }]
-    })
-    setOpen(false)
-    toast.success("Production Started", { hideProgressBar: true, autoClose: 2000 })
+  const assignDesigners = async () => { 
+    const production = {
+      order : order,
+      designer : designer, 
+      level : 0 
+    } 
+    try {
+      const response = await axios.post(backendUrl+"/api/production/new",production)
+      if(response.data.success){
+        setOpen(false)
+        await fetchProduction();
+        toast.success(response.data.message, { hideProgressBar: true, autoClose: 2000 })
+      }else{
+        console.error(response.data.message)
+        toast.error("Production failed, Try to reload", { hideProgressBar:true, autoClose:2000 })
+      }
+    } catch (error) {
+      console.error(error.message)
+      toast.error("Production failed, Try to reload", { hideProgressBar:true, autoClose:2000 })
+    }
     printHandler()
   }
 

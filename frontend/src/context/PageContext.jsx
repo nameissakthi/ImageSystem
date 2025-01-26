@@ -47,28 +47,41 @@ const PageContextProvider = (props) => {
     }
 
     const addToCart = (item, qty) => {
-        setCart((prevCart) => {
-            const existingItem = prevCart.find((cartItem) => cartItem.name === item.name);
-            if (existingItem) {
-                return prevCart.map((cartItem) =>
-                    cartItem.name === item.name
-                        ? { ...cartItem, qty: Number(cartItem.qty+qty[cartItem.name]), totalAmt: cartItem.totalAmt+(qty[cartItem.name]*item.price) }
-                        : cartItem
-                );
-            } else {
-                return [...prevCart, { name: item.name, img: item.img, qty: qty[item.name], price: item.price, totalAmt: qty[item.name]*item.price }];
-            }
-        });
-        toast.success(`${item.name} Added To Cart`, {
-            position: "top-center",
-            autoClose: 500,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
+        if(qty[item.name]!=undefined){
+            setCart((prevCart) => {
+                const existingItem = prevCart.find((cartItem) => cartItem.name === item.name);
+                if (existingItem) {
+                    return prevCart.map((cartItem) =>
+                        cartItem.name === item.name
+                            ? { ...cartItem, qty: Number(cartItem.qty+qty[cartItem.name]), totalAmt: cartItem.totalAmt+(qty[cartItem.name]*item.price) }
+                            : cartItem
+                    );
+                } else {
+                    return [...prevCart, { name: item.name, img: item.img, qty: qty[item.name], price: item.price, totalAmt: qty[item.name]*item.price }];
+                }
             });
+            toast.success(`${item.name} Added To Cart`, {
+                position: "top-center",
+                autoClose: 500,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                });
+        }else{
+            toast.warning(`Please enter the QTY`, {
+                position: "top-center",
+                autoClose: 500,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                });
+        }
     };
 
     const incrementQty = (itemName) => {
@@ -105,10 +118,6 @@ const PageContextProvider = (props) => {
         {name: "Number", img: product_img.number_seal, price: 70},
         {name: "Locker", img: product_img.seal_branch_manager, price: 70},
     ]
-
-    // useEffect(()=>{
-    //     console.log(cart)
-    // },[cart])
 
     const value = {
         backendUrl,

@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"
+import { toast } from "react-toastify"
 
 export const PageContext = createContext();
 
@@ -10,7 +11,10 @@ const PageContextProvider = (props) => {
     const navigate = useNavigate();
     const [date, setDate] = useState("")
     const [login, setLogin] = useState(false)
+    const [production, setProduction] = useState([])
+    const [orders, setOrders] = useState([]);
     const discount = 0
+    const currency = "₹"
 
     const formattingDate = () => {
         const today = new Date();
@@ -23,8 +27,6 @@ const PageContextProvider = (props) => {
     
         setDate(dd + '/' + mm + '/' + yyyy)
     }
-    
-    const [orders, setOrders] = useState([]);
 
     const retrieveOrder = async () => {
         try {
@@ -36,8 +38,23 @@ const PageContextProvider = (props) => {
             }
         } catch (error) {
             console.error(error.message)
+            toast.error("Error in Fetching Orders. Reload Page", { hideProgressBar:true, autoClose:2000 })
         }
         formattingDate();
+    }
+
+    const fetchProduction = async () => {
+        try {
+            const response = await axios.get(backendUrl+"/api/production/list")
+            if(response.data.success){
+                setProduction(response.data.productions)
+            }else{
+                console.error(response.data.message)
+            }
+        } catch (error) {
+            console.error(error.message)
+            toast.error("Error in Fetching Productions. Reload Page", { hideProgressBar:true, autoClose:2000 })
+        }
     }
 
     const [clients, setClients] = useState([
@@ -65,20 +82,44 @@ const PageContextProvider = (props) => {
         },
     ]);
 
+    const [products, setProducts] = useState([
+        {
+            _id : "1",
+            img : "",
+            name : "Dater",
+            sp : 100,
+            cp : 80
+        },
+        {
+            _id : "2",
+            img : "",
+            name : "Mini dater",
+            sp : 200,
+            cp : 100
+        },
+        {
+            _id : "3",
+            img : "",
+            name : "Approval",
+            sp : 100,
+            cp : 70
+        }
+    ])
+
     const designers = [
         {id:1,name : "Raghu"},
         {id:2,name : "Hayram"},
         {id:3,name : "Sriram"}
     ]
 
-    const [production, setProduction] = useState([])
-
 
     useEffect(() => {
         retrieveOrder();
+        fetchProduction();
     }, [])
 
     const value = {
+        currency,
         backendUrl, discount,
         navigate,
         login, setLogin,
@@ -86,7 +127,8 @@ const PageContextProvider = (props) => {
         date,
         clients, setClients,
         designers,
-        production, setProduction
+        production, setProduction, fetchProduction,
+        products, setProducts
     }
 
     return (

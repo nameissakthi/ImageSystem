@@ -5,6 +5,7 @@ import connetDB from "./config/mongodb.js"
 import bankAccRouter from "./routes/bankAccRoute.js"
 import adminAccRouter from "./routes/adminAccRoute.js"
 import orderRouter from "./routes/orderRoute.js"
+import productRouter from "./routes/productionRoute.js"
 
 const app = express()
 const port = process.env.PORT || 4000
@@ -16,6 +17,7 @@ app.use(cors())
 app.use('/api/bankAcc', bankAccRouter)
 app.use('/api/admin', adminAccRouter)
 app.use('/api/order', orderRouter)
+app.use('/api/production', productRouter)
 
 app.get("/", (req,res) => {
     res.send("API WORKING")
